@@ -26,12 +26,12 @@ spec:
   project: default
 
   source:
-    # NOTE: if you rename the GitHub repo to include "phoenix" in its name
-    # (recommended — the project subject requires it), update this URL.
-    repoURL: https://github.com/Phoenixhhh76/Inception_of_Things.git
+    # 42 login (hho-troc) is in the repo name, as required by the subject.
+    # The same repo is used for submission AND as GitOps source — Argo CD
+    # only reads the path: below, so the rest of the repo is ignored.
+    repoURL: https://github.com/Phoenixhhh76/Inception-of-Things-hho-troc.git
     targetRevision: main
-    path: p3/confs/manifests      # path inside the repo (we re-use the
-                                  # same repo for submission AND GitOps source)
+    path: p3/confs/manifests
 
   destination:
     server: https://kubernetes.default.svc
