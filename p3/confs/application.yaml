@@ -29,7 +29,7 @@ spec:
     # 42 login (hho-troc) is in the repo name, as required by the subject.
     # The same repo is used for submission AND as GitOps source — Argo CD
     # only reads the path: below, so the rest of the repo is ignored.
-    repoURL: https://github.com/Phoenixhhh76/Inception-of-Things-hho-troc.git
+    repoURL: https://github.com/Phoenixhhh76/Inception_of_Things_hho-troc.git
     targetRevision: main
     path: p3/confs/manifests
 
