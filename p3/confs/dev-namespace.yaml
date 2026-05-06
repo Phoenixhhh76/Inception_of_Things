@@ -1,0 +1,6 @@
+# Dev namespace where Argo CD will deploy the application.
+# (The 'argocd' namespace is created by the Argo CD install manifest.)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev

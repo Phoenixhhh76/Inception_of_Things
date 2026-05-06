@@ -1,0 +1,46 @@
+# Argo CD Application — the GitOps "subscription".
+#
+# Argo CD watches the GitHub repo below; whenever the manifests in
+# `path` change, it syncs them into the target cluster/namespace.
+#
+# Before applying this file:
+#   1. Create a PUBLIC GitHub repo (the project subject requires the
+#      repo name to contain a member's login — e.g. "iot-phoenix").
+#   2. Push the contents of p3/confs/manifests/ to that repo.
+#   3. Replace REPO_URL_HERE below with your repo's HTTPS clone URL.
+#   4. kubectl apply -f p3/confs/application.yaml
+#
+# The syncPolicy is fully automated: any commit on the tracked branch
+# triggers a sync within ~3 minutes (or instantly if you click Sync
+# in the UI / `argocd app sync`).
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: playground
+  namespace: argocd
+  # Allow Argo CD to clean up child resources when the Application is deleted.
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  source:
+    # NOTE: if you rename the GitHub repo to include "phoenix" in its name
+    # (recommended — the project subject requires it), update this URL.
+    repoURL: https://github.com/Phoenixhhh76/Inception_of_Things.git
+    targetRevision: main
+    path: p3/confs/manifests      # path inside the repo (we re-use the
+                                  # same repo for submission AND GitOps source)
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+
+  syncPolicy:
+    automated:
+      prune: true                 # delete resources removed from git
+      selfHeal: true              # revert manual cluster edits to match git
+    syncOptions:
+      - CreateNamespace=false     # we created 'dev' ourselves
+      - ApplyOutOfSyncOnly=true

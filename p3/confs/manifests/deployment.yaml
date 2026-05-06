@@ -1,0 +1,38 @@
+# Deployment for the "playground" application.
+# This file lives in your PUBLIC GitHub repo — Argo CD pulls it from there.
+#
+# To switch versions during the demo, change `image: wil42/playground:v1`
+# to `:v2`, commit and push. Argo CD will sync within ~3 minutes (or
+# trigger an immediate sync from the UI / `argocd app sync playground`).
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playground
+  namespace: dev
+  labels:
+    app: playground
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playground
+  template:
+    metadata:
+      labels:
+        app: playground
+    spec:
+      containers:
+        - name: playground
+          image: wil42/playground:v1
+          ports:
+            - containerPort: 8888
+              name: http
+          # Small resource caps — this is a demo, no need to grab everything.
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"

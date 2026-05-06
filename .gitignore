@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vagrant — VM state should never be committed
+.vagrant/
+
+# kubeconfig snippets / secrets that shouldn't be public
+kubeconfig
+*.kubeconfig
+*-secret.yaml

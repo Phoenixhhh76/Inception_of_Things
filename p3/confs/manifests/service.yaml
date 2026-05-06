@@ -1,0 +1,19 @@
+# Service exposing the playground Deployment inside the cluster.
+# We use ClusterIP because we'll reach it via `kubectl port-forward` from
+# the host, not via a NodePort or Ingress.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: playground
+  namespace: dev
+  labels:
+    app: playground
+spec:
+  type: ClusterIP
+  selector:
+    app: playground
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 8888

@@ -1,0 +1,26 @@
+# K3d cluster definition for Part 3.
+#
+# Usage:
+#   k3d cluster create --config p3/confs/cluster.yaml
+#
+# Why no port mappings here?
+#   We use `kubectl port-forward` for the app (8888) and Argo CD UI (8080).
+#   This avoids needing an Ingress controller and matches the PDF example
+#   which shows `curl http://localhost:8888/`.
+#
+# Why disable Traefik?
+#   We don't need an Ingress controller for Part 3 (port-forward is enough),
+#   and disabling it keeps the cluster lighter and startup faster.
+
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: iot
+servers: 1
+agents: 0
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
